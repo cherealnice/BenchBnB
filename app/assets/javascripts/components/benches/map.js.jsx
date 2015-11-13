@@ -16,24 +16,14 @@ var BenchesMap = React.createClass({
     var map = React.findDOMNode(this.refs.map);
 
     var mapOptions = {
-      center: {lat: 40.768530, lng: -73.978256},
+      center: {lat: 40.8698595, lng: -74.3088759},
       zoom: 12
     };
 
     var newMap = new google.maps.Map(map, mapOptions);
 
     newMap.addListener('idle', function () {
-      var bounds = this.getBounds();
-
-      var northEastLat = bounds.getNorthEast().lat();
-      var northEastLng = bounds.getNorthEast().lng();
-      var southWestLat = bounds.getSouthWest().lat();
-      var southWestLng = bounds.getSouthWest().lng();
-
-      var coords = {
-        northEast: { lat: northEastLat, lng: northEastLng },
-        southWest: { lat: southWestLat, lng: southWestLng }
-      };
+      var coords = parseBounds.call(this);
 
       ApiUtil.fetchBenches(coords);
     });
@@ -63,3 +53,17 @@ var BenchesMap = React.createClass({
     );
   }
 });
+
+  var parseBounds = function () {
+    var bounds = this.getBounds();
+
+    var northEastLat = bounds.getNorthEast().lat();
+    var northEastLng = bounds.getNorthEast().lng();
+    var southWestLat = bounds.getSouthWest().lat();
+    var southWestLng = bounds.getSouthWest().lng();
+
+    return {
+      northEast: { lat: northEastLat, lng: northEastLng },
+      southWest: { lat: southWestLat, lng: southWestLng }
+    };
+  };
