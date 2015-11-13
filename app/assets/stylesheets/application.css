@@ -13,3 +13,30 @@
  *= require_tree .
  *= require_self
  */
+
+html, body, div, h1, h2, h3, h5, p, ul, li, input, form, button, label {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+ul {
+  list-style: none;
+}
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+
+.map {
+  width: 500px;
+  height: 500px;
+}
