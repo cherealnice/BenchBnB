@@ -4,12 +4,19 @@ var BenchesSearch = React.createClass({
     return ({ detailMarker: null });
   },
 
-  onLiHover: function(e) {
+  onLiMouseEnter: function(e) {
     e.preventDefault();
     var target = e.currentTarget;
     var bench = BenchStore.find(target.innerText);
     MarkerStore.resetMarker(bench);
     this.setState({detailMarker: bench});
+  },
+
+  onLiMouseLeave: function(e) {
+    e.preventDefault();
+    var target = e.currentTarget;
+    MarkerStore.resetMarker(null);
+    this.setState({detailMarker: null});
   },
 
   render: function () {
@@ -20,7 +27,9 @@ var BenchesSearch = React.createClass({
     return (
       <div>
         <BenchesMap detailMarker={this.state.detailMarker}/>
-        <BenchesIndex onLiHover={this.onLiHover}/>
+        <BenchesIndex
+          onLiMouseLeave={this.onLiMouseLeave}
+          onLiMouseEnter={this.onLiMouseEnter}/>
       </div>
     );
   }

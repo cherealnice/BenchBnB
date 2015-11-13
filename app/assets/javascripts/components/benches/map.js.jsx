@@ -14,16 +14,18 @@
 
     componentWillReceiveProps: function (props) {
       var newMarker = props.detailMarker;
-      this.toggleAnimation(newMarker, this.props.detailMarker);
+      this.toggleAnimation(newMarker);
     },
 
-    toggleAnimation: function (newMarker, oldMarker) {
-      var targetMarker = this.findMarker(newMarker.description);
-      if (oldMarker) {
-        var targetOldMarker = this.findMarker(oldMarker.description);
+    toggleAnimation: function (newMarker) {
+      if (this.props.detailMarker) {
+        var targetOldMarker = this.findMarker(this.props.detailMarker.description);
         targetOldMarker.setAnimation(null);
       }
-      targetMarker.setAnimation(google.maps.Animation.BOUNCE);
+      if (newMarker) {
+        var targetMarker = this.findMarker(newMarker.description);
+        targetMarker.setAnimation(google.maps.Animation.BOUNCE);
+      }
     },
 
     findMarker: function (description) {

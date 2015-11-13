@@ -19,7 +19,8 @@ var BenchesIndex = React.createClass({
       <ul>
     {this.state.benches.map(function (bench) {
       return <li
-        onMouseOver={this.props.onLiHover}
+        onMouseLeave={this.props.onLiMouseLeave}
+        onMouseEnter={this.props.onLiMouseEnter}
         key={bench.description}
         className="bench">
           {bench.description}
