@@ -23,6 +23,7 @@ html, body, div, h1, h2, h3, h5, p, ul, li, input, form, button, label {
   text-align: inherit;
   color: inherit;
   background: transparent;
+  font-family: "Helvetica";
 }
 
 ul {
@@ -33,10 +34,4 @@ ul {
   content: "";
   display: block;
   clear: both;
-}
-
-
-.map {
-  width: 500px;
-  height: 500px;
 }

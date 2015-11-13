@@ -14,8 +14,16 @@ var BenchesIndex = React.createClass({
   },
 
   render: function () {
-    return <div>{this.state.benches.map(function (bench) {
-      return <div key={bench.description} className="bench">{bench.description}</div>;
-    })}</div>;
+    return <div className="benches">
+      <h2>Locations:</h2>
+      <ul>
+    {this.state.benches.map(function (bench) {
+      return <li
+        onMouseOver={this.props.onLiHover}
+        key={bench.description}
+        className="bench">
+          {bench.description}
+        </li>;
+    }.bind(this))}</ul></div>;
   }
 });

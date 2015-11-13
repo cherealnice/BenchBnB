@@ -21,6 +21,17 @@
       this.removeListener(event, callback);
     },
 
+    find: function (description) {
+      var match;
+      for (var i = 0; i < _benches.length; i++) {
+        if (_benches[i].description === description) {
+          match = _benches[i];
+          break;
+        }
+      }
+      return match;
+    },
+
     dispatcherID: AppDispatcher.register(function(payload){
       switch (payload.actionType) {
         case BenchConstants.BENCHES_RECEIVED:

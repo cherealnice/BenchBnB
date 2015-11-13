@@ -12,6 +12,28 @@
       createMap.call(this);
     },
 
+    componentWillReceiveProps: function (props) {
+      var newMarker = props.detailMarker;
+      this.toggleAnimation(newMarker, this.props.detailMarker);
+    },
+
+    toggleAnimation: function (newMarker, oldMarker) {
+      var targetMarker = this.findMarker(newMarker.description);
+      if (oldMarker) {
+        var targetOldMarker = this.findMarker(oldMarker.description);
+        targetOldMarker.setAnimation(null);
+      }
+      targetMarker.setAnimation(google.maps.Animation.BOUNCE);
+    },
+
+    findMarker: function (description) {
+      for (var i = 0; i < this.state.markers.length; i++) {
+        if (this.state.markers[i].title === description) {
+          return this.state.markers[i];
+        }
+      }
+    },
+
     onBenchIndexChange: function () {
 
       var benches = BenchStore.all() || [];
@@ -133,7 +155,7 @@
     var map = React.findDOMNode(this.refs.map);
 
     var mapOptions = {
-      center: {lat: 40.8698595, lng: -74.3088759},
+      center: {lat: 40.7459036, lng: -73.9908681},
       zoom: 12
     };
 
