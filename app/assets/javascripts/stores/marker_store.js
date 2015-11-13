@@ -7,10 +7,11 @@
 
     resetMarker: function(marker){
       _marker = marker;
+      this.emit(this.INDEX_HOVER_CHANGE_EVENT);
     },
 
     marker: function(){
-      return marker;
+      return _marker;
     },
 
     addChangeListener: function(callback, event){

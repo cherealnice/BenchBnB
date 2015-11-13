@@ -2,30 +2,32 @@
   root.BenchesMap = React.createClass({
 
     getInitialState: function () {
-      return { map: 'undefined', markers: []};
+      return { map: 'undefined',
+        markers: [],
+        detailMarker: MarkerStore.marker() };
     },
 
     componentDidMount: function () {
       BenchStore.addChangeListener(this.onBenchIndexChange,
         BenchStore.BENCHES_INDEX_CHANGE_EVENT);
+      MarkerStore.addChangeListener(this.onMarkerDetailChange,
+        MarkerStore.INDEX_HOVER_CHANGE_EVENT);
 
       createMap.call(this);
     },
 
-    componentWillReceiveProps: function (props) {
-      var newMarker = props.detailMarker;
-      this.toggleAnimation(newMarker);
-    },
-
-    toggleAnimation: function (newMarker) {
-      if (this.props.detailMarker) {
-        var targetOldMarker = this.findMarker(this.props.detailMarker.description);
-        targetOldMarker.setAnimation(null);
+    onMarkerDetailChange: function () {
+      var newMarker = MarkerStore.marker();
+      if (this.state.detailMarker) {
+        var OldMarker = this.findMarker(this.state.detailMarker.description);
+        OldMarker.setAnimation(null);
       }
+
       if (newMarker) {
         var targetMarker = this.findMarker(newMarker.description);
         targetMarker.setAnimation(google.maps.Animation.BOUNCE);
       }
+      this.setState({ detailMarker: newMarker });
     },
 
     findMarker: function (description) {
@@ -74,7 +76,8 @@
     return (
       new google.maps.Marker({
         position: LatLng,
-        title: bench.description
+        title: bench.description,
+        animation: google.maps.Animation.DROP
       })
     );
   };

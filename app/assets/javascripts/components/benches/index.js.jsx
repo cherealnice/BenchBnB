@@ -13,14 +13,27 @@ var BenchesIndex = React.createClass({
     this.setState({ benches: BenchStore.all() });
   },
 
+  onLiMouseEnter: function(e) {
+    e.preventDefault();
+    var target = e.currentTarget;
+    var bench = BenchStore.find(target.innerText);
+    MarkerStore.resetMarker(bench);
+  },
+
+  onLiMouseLeave: function(e) {
+    e.preventDefault();
+    var target = e.currentTarget;
+    MarkerStore.resetMarker(null);
+  },
+
   render: function () {
     return <div className="benches">
       <h2>Locations:</h2>
       <ul>
     {this.state.benches.map(function (bench) {
       return <li
-        onMouseLeave={this.props.onLiMouseLeave}
-        onMouseEnter={this.props.onLiMouseEnter}
+        onMouseLeave={this.onLiMouseLeave}
+        onMouseEnter={this.onLiMouseEnter}
         key={bench.description}
         className="bench">
           {bench.description}
