@@ -36,33 +36,10 @@ var BenchesMap = React.createClass({
     var benches = BenchStore.all() || [];
     var markers = this.state.markers.slice() || [];
 
-    addMarkers.call(this, benches, markers);
-    removeMarkers.call(this, benches, markers);
-
-
-    // if (benches) {
-    //   benches.forEach(function (bench) {
-    //     debugger;
-    //
-    //     var markerOverlap = markers.filter(function (marker) {
-    //
-    //       return(
-    //         benchLat === markerLat &&
-    //         benchLng === markerLng
-    //       );
-    //     });
-    //
-    //     if (markerOverlap.length > markers.length) {
-    //       markerOverlap.forEach(function (overLapMarker) {
-    //         overLapMarker.setMap(null);
-    //         markers.splice(markers.indexOf(overLapMarker), 1);
-    //       });
-    //     } else {
-    //     }
-      //
-      //   this.setState({ markers: markers });
-      // }.bind(this));
-    // }
+    var newMarkers = addMarkers.call(this, benches, markers);
+    markers.concat(newMarkers);
+    markers = removeMarkers.call(this, benches, markers);
+    this.setState({markers: markers});
   },
 
   makeMarker: function (bench) {
@@ -98,47 +75,64 @@ var parseBounds = function () {
 };
 
 var addMarkers = function (benches, markers) {
+  var newMarkerArray = [];
+
   for (var i = 0; i < benches.length; i++) {
     var matched = false;
     var benchMarker = this.makeMarker(benches[i]);
     var benchLat = benchMarker.getPosition().lat();
     var benchLng = benchMarker.getPosition().lng();
 
-    for (var j = 0; j < markers.length; j++) {
-      var markerLat = markers[i].getPosition().lat();
-      var markerLng = markers[i].getPosition().lng();
+    if (markers.length > 1) {
+      for (var j = 0; j < markers.length; j++) {
+        var markerLat = markers[j].getPosition().lat();
+        var markerLng = markers[j].getPosition().lng();
 
-      if (benchLat === markerLat || benchLng === markerLng) {
-        matched = true;
+        if (benchLat === markerLat || benchLng === markerLng) {
+          matched = true;
+        }
       }
     }
 
     if (!matched) {
       benchMarker.setMap(this.state.map);
-      markers.push(benchMarker);
+      newMarkerArray.push(benchMarker);
     }
   }
+  newMarkerArray.forEach(function(newMarker) {
+    markers.push(newMarker);
+  });
+
+  return markers;
 };
 
 var removeMarkers = function (benches, markers) {
+  var iArray = [];
   for (i = 0; i < markers.length; i++) {
     var matched = false;
     var markerLat = markers[i].getPosition().lat();
     var markerLng = markers[i].getPosition().lng();
 
-    for (j = 0; j < benches.length; j++) {
-      var benchMarker = this.makeMarker(benches[i]);
-      var benchLat = benchMarker.getPosition().lat();
-      var benchLng = benchMarker.getPosition().lng();
+    if (benches.length > 0) {
+      for (j = 0; j < benches.length; j++) {
+        var benchMarker = this.makeMarker(benches[j]);
+        var benchLat = benchMarker.getPosition().lat();
+        var benchLng = benchMarker.getPosition().lng();
 
-      if (benchLat === markerLat || benchLng === markerLng) {
-        matched = true;
+        if (benchLat === markerLat || benchLng === markerLng) {
+          matched = true;
+        }
       }
     }
 
     if (!matched) {
-      benchMarker.setMap(null);
-      markers.splice(markers.indexOf(benchMarker));
+      markers[i].setMap(null);
+      iArray.push(i);
     }
   }
+  iArray.reverse().forEach(function(idx) {
+    markers.splice(idx, 1);
+  });
+
+  return markers;
 };

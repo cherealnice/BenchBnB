@@ -14,8 +14,8 @@ var BenchesIndex = React.createClass({
   },
 
   render: function () {
-    return <div>{this.state.benches}</div>;
+    return <div>{this.state.benches.map(function (bench) {
+      return <div key={bench.description} className="bench">{bench.description}</div>;
+    })}</div>;
   }
-
-
 });
