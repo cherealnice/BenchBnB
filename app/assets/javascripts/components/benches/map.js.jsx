@@ -17,25 +17,11 @@
     },
 
     onMarkerDetailChange: function () {
-      var newMarker = MarkerStore.marker();
-      if (this.state.detailMarker) {
-        var OldMarker = this.findMarker(this.state.detailMarker.description);
-        OldMarker.setAnimation(null);
-      }
 
-      if (newMarker) {
-        var targetMarker = this.findMarker(newMarker.description);
-        targetMarker.setAnimation(google.maps.Animation.BOUNCE);
-      }
+      removeOldMarker.call(this);
+      addNewMarker.call(this);
+
       this.setState({ detailMarker: newMarker });
-    },
-
-    findMarker: function (description) {
-      for (var i = 0; i < this.state.markers.length; i++) {
-        if (this.state.markers[i].title === description) {
-          return this.state.markers[i];
-        }
-      }
     },
 
     onBenchIndexChange: function () {
@@ -43,10 +29,26 @@
       var benches = BenchStore.all() || [];
       var markers = this.state.markers.slice() || [];
 
-      var newMarkers = addMarkers.call(this, benches, markers);
-      markers.concat(newMarkers);
-      markers = removeMarkers.call(this, benches, markers);
-      this.setState({markers: markers});
+      this.destroyMarkers(markers);
+      var newMarkers = this.addMarkers(benches);
+      this.setState({markers: newMarkers});
+    },
+
+    destroyMarkers: function (markers) {
+      markers.forEach(function (marker) {
+        marker.setMap(null);
+      });
+    },
+
+    addMarkers: function (benches) {
+      newMarkers = [];
+      benches.forEach(function (bench) {
+        newMarker = makeMarker(bench);
+        newMarker.setMap(this.state.map);
+        newMarkers.push(newMarker);
+      }.bind(this));
+
+      return newMarkers;
     },
 
     render: function () {
@@ -56,6 +58,32 @@
       );
     }
   });
+
+  var addNewMarker = function () {
+    var newMarker = MarkerStore.marker();
+    if (newMarker) {
+      var targetMarker = findMarker.call(this, newMarker.description);
+      targetMarker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  };
+
+  var removeOldMarker = function () {
+    if (this.state.detailMarker) {
+
+      var OldMarker = findMarker.call(this,
+        this.state.detailMarker.description);
+
+      OldMarker.setAnimation(null);
+    }
+  };
+
+  var findMarker = function (description) {
+    for (var i = 0; i < this.state.markers.length; i++) {
+      if (this.state.markers[i].title === description) {
+        return this.state.markers[i];
+      }
+    }
+  };
 
   var parseBounds = function () {
     var bounds = this.getBounds();
@@ -82,80 +110,6 @@
     );
   };
 
-  var addMarkers = function (benches, markers) {
-    var newMarkerArray = [];
-
-    for (var i = 0; i < benches.length; i++) {
-      var matched = false;
-      var benchMarker = makeMarker(benches[i]);
-      var benchLatLng = parseLatLng(benchMarker);
-
-      if (markers.length > 1) {
-        for (var j = 0; j < markers.length; j++) {
-          var markerLatLng = parseLatLng(markers[i]);
-
-          if (sameLatLng(benchLatLng, markerLatLng)) {
-            matched = true;
-          }
-        }
-      }
-
-      if (!matched) {
-        benchMarker.setMap(this.state.map);
-        newMarkerArray.push(benchMarker);
-      }
-    }
-    newMarkerArray.forEach(function(newMarker) {
-      markers.push(newMarker);
-    });
-
-    return markers;
-  };
-
-  var parseLatLng = function (marker) {
-    return {
-      lat: marker.getPosition().lat(),
-      lng: marker.getPosition().lng()
-    };
-  };
-
-  var sameLatLng = function (LatLng1, LatLng2) {
-    if (LatLng1.lat === LatLng2.lat &&
-        LatLng1.lng === LatLng2.lng) {
-          return true;
-        }
-    return false;
-  };
-
-  var removeMarkers = function (benches, markers) {
-    var iArray = [];
-    for (i = 0; i < markers.length; i++) {
-      var matched = false;
-      var markerLatLng = parseLatLng(markers[i]);
-
-      if (benches.length > 0) {
-        for (j = 0; j < benches.length; j++) {
-          var benchMarker = makeMarker(benches[j]);
-          var benchMarkerLatLng = parseLatLng(benchMarker);
-
-          if (sameLatLng(markerLatLng, benchMarkerLatLng)) {
-            matched = true;
-          }
-        }
-      }
-
-      if (!matched) {
-        markers[i].setMap(null);
-        iArray.push(i);
-      }
-    }
-    iArray.reverse().forEach(function(idx) {
-      markers.splice(idx, 1);
-    });
-
-    return markers;
-  };
-
   var createMap = function () {
     var map = React.findDOMNode(this.refs.map);
 
@@ -172,6 +126,6 @@
       ApiUtil.fetchBenches(coords);
     });
 
-    this.setState({map: newMap});
+    this.setState({map: newMap, markers: BenchStore.all()});
   };
 })(this);
