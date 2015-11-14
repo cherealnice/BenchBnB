@@ -1,0 +1,3 @@
+MarkerConstants = {
+  MARKER_LABELS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+};

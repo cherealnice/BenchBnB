@@ -45,6 +45,7 @@
       benches.forEach(function (bench) {
         newMarker = makeMarker(bench);
         newMarker.setMap(this.state.map);
+          newMarker.setIcon('http://i.imgur.com/iz2DEMm.png');
         newMarkers.push(newMarker);
       }.bind(this));
 
@@ -73,6 +74,7 @@
 
       var oldMarker = findMarker.call(this,
         this.state.detailMarker.description);
+
       oldMarker.setAnimation(null);
     }
   };
