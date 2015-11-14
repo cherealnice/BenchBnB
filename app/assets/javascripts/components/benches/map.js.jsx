@@ -19,7 +19,7 @@
     onMarkerDetailChange: function () {
 
       removeOldMarker.call(this);
-      addNewMarker.call(this);
+      var newMarker = addNewMarker.call(this);
 
       this.setState({ detailMarker: newMarker });
     },
@@ -65,15 +65,15 @@
       var targetMarker = findMarker.call(this, newMarker.description);
       targetMarker.setAnimation(google.maps.Animation.BOUNCE);
     }
+    return newMarker;
   };
 
   var removeOldMarker = function () {
     if (this.state.detailMarker) {
 
-      var OldMarker = findMarker.call(this,
+      var oldMarker = findMarker.call(this,
         this.state.detailMarker.description);
-
-      OldMarker.setAnimation(null);
+      oldMarker.setAnimation(null);
     }
   };
 
