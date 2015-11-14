@@ -11,8 +11,13 @@ var BenchesSearch = React.createClass({
     }
     return (
       <div>
-        <BenchesMap detailMarker={this.state.detailMarker}/>
-        <BenchesIndex />
+        <section className='map-section group'>
+          <BenchesMap detailMarker={this.state.detailMarker}/>
+        </section>
+        <section className='sidebar group'>
+          <header></header>
+          <BenchesIndex />
+        </section>
       </div>
     );
   }

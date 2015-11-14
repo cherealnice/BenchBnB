@@ -37,5 +37,11 @@ ul {
 }
 
 body {
-  background: #508060;
+  background: #eee;
+}
+
+header {
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid lightgrey;
 }

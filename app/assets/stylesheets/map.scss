@@ -1,39 +1,12 @@
 
 .map {
-  width: 500px;
-  height: 500px;
-  border: 5px solid black;
-  border-radius: 10px;
-  margin: 20px auto;
+  height: 100%;
+  width: 100%;
   background: rgba(200, 200, 200, 0.6);
 }
 
-.bench {
-  display: block;
-  text-align: center;
-  font-weight: 600;
-  margin: 10px;
-}
-
-.bench:hover {
-  color: blue;
-  cursor: pointer;
-}
-
-.benches {
-  width: 500px;
-  min-height: 100px;
-  display: block;
-  border: 5px solid black;
-  border-radius: 10px;
-  margin: auto;
-  background: rgba(200, 200, 200, 0.6);
-}
-
-.benches > h2 {
-  text-align: center;
-  margin: 10px;
-  text-decoration: underline;
-  font-size: 18px;
-  font-weight: 700;
+.map-section {
+  height: 620px;
+  float: right;
+  width: 510px;
 }

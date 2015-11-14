@@ -1,0 +1,51 @@
+.sidebar {
+  float: left;
+  // border: 1px solid red;
+  height: 620px;
+  width: calc(100vw - 510px);
+  min-width: 200px;
+  overflow: scroll;
+  background: transparent;
+}
+
+.sidebar > header {
+  height: 190px;
+  background: white;
+  // border: 1px solid grey;
+}
+
+.bench {
+  display: block;
+  height: 350px;
+  width: calc((100vw - 555px) / 2);
+  min-width: 200px;
+  float: left;
+  text-align: center;
+  font-weight: 600;
+  margin: 10px;
+  border: 1px solid grey;
+}
+
+.bench:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.benches {
+  width: 100%;
+  min-height: 100px;
+  // height: 100%;
+  display: block;
+  // border-radius: 10px;
+  margin: auto;
+  // background: rgba(200, 200, 200, 0.6);
+  // float: left;
+}
+
+.benches > h2 {
+  text-align: center;
+  margin: 10px;
+  text-decoration: underline;
+  font-size: 18px;
+  font-weight: 700;
+}
