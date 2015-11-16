@@ -30,7 +30,9 @@ var BenchesSearch = React.createClass({
           <BenchesMap detailMarker={this.state.detailMarker}/>
         </section>
         <section className='sidebar group'>
-          <header></header>
+          <header>
+            <FilterParams />
+          </header>
           <BenchesIndex />
         </section>
       </div>
