@@ -1,5 +1,7 @@
 class Bench < ActiveRecord::Base
   validates :description, :lat, :long, presence: true
+  validates :seating, presence: true, inclusion: { in: 1..20,
+      message: 'Benches must sit between 1 and 20 people.'}
 
   def self.in_bounds(bounds)
 
