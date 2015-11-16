@@ -52,7 +52,6 @@
       benches.forEach(function (bench) {
         newMarker = makeMarker(bench);
         newMarker.setMap(this.state.map);
-          newMarker.setIcon('http://i.imgur.com/iz2DEMm.png');
         newMarkers.push(newMarker);
       }.bind(this));
 
@@ -126,6 +125,7 @@
       new google.maps.Marker({
         position: LatLng,
         title: bench.description,
+        icon: 'http://i.imgur.com/iz2DEMm.png',
         animation: google.maps.Animation.DROP
       })
     );
@@ -146,6 +146,10 @@
     newMap.addListener('idle', this.handleIdle);
 
     newMap.addListener('dblclick', this.handleMapDblClick);
+
+    if (this.props.centerMarker) {
+      makeMarker(center).setMap(newMap);
+    }
 
     this.setState({map: newMap, markers: BenchStore.all()});
   };

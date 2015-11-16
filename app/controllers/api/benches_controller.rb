@@ -14,6 +14,16 @@ class Api::BenchesController < ApplicationController
     end
   end
 
+  def show
+    @bench = Bench.find(params[:id])
+
+    if @bench
+      render :show
+    else
+      status: 404
+    end
+  end
+
   private
 
   def bench_params

@@ -6,7 +6,7 @@ ApiActions = {
     });
   },
 
-  recieveOneBench: function (bench) {
+  receiveOneBench: function (bench) {
     AppDispatcher.dispatch({
       actionType: BenchConstants.BENCH_RECEIVED,
       bench: bench

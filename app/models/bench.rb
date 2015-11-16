@@ -3,6 +3,8 @@ class Bench < ActiveRecord::Base
   validates :seating, presence: true, inclusion: { in: 1..20,
       message: 'Benches must sit between 1 and 20 people.'}
 
+  has_many :comments
+
   def self.in_params(params)
     bounds = params["mapBounds"]
     min_seating = params["minSeating"]
