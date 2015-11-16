@@ -37,6 +37,7 @@
       e.preventDefault();
       var target = e.currentTarget;
       var bench = BenchStore.find(target.innerText, 'description');
+      ApiUtil.fetchBench(bench.id);
       this.history.pushState(null, "/benches/" + bench.id, {});
     },
 

@@ -20,7 +20,7 @@ class Api::BenchesController < ApplicationController
     if @bench
       render :show
     else
-      status: 404
+      render status: 404
     end
   end
 

@@ -35,7 +35,6 @@
     onBenchIndexChange: function () {
       var benches = BenchStore.all() || [];
       var markers = this.state.markers.slice() || [];
-
       this.destroyMarkers(markers);
       var newMarkers = this.addMarkers(benches);
       this.setState({markers: newMarkers});
@@ -146,11 +145,6 @@
     newMap.addListener('idle', this.handleIdle);
 
     newMap.addListener('dblclick', this.handleMapDblClick);
-
-    if (this.props.centerMarker) {
-      makeMarker(center).setMap(newMap);
-    }
-
-    this.setState({map: newMap, markers: BenchStore.all()});
+    this.setState({map: newMap});
   };
 })(this);

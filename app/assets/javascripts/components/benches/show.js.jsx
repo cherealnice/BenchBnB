@@ -2,23 +2,8 @@
 
   root.BenchShow = React.createClass({
 
-    componentWillRecieveProps: function (newProps) {
-      this.fetchBench(newProps.routParams.id);
-    },
-
-    fetchBench: function (id) {
-      debugger;
-      ApiUtil.fetchBench(id);
-    },
-
     render: function () {
-      debugger;
       var bench = BenchStore.find(parseInt(this.props.routeParams.id), 'id');
-
-      if (!bench) {
-        setTimeout(this.fetchBench.bind(this, this.props.routeParams.id), 0);
-      }
-
       var center = {lat: bench.lat, lng: bench.lng};
       return (
         <div>
@@ -33,7 +18,8 @@
           <section className="sidebar">
             <h1>{bench.description}</h1>
             <h3>Lat: {bench.lat}, Long: {bench.lng}</h3>
-            <ReviewForm benchId={this.props.routeParams.id}/>
+            <CommentForm benchId={this.props.routeParams.id} />
+            <CommentsIndex benchId={this.props.routeParams.id} />
           </section>
         </div>
       );

@@ -13,6 +13,13 @@ ApiActions = {
     });
   },
 
+  receiveOneComment: function (comment) {
+    AppDispatcher.dispatch({
+      actionType: CommentConstants.COMMENT_RECEIVED,
+      comment: comment
+    });
+  },
+
   showBench: function (id) {
     AppDispatcher.dispatch({
       actionType: BenchConstants.BENCH_SHOW,

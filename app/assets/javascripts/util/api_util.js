@@ -13,11 +13,22 @@ ApiUtil = {
 
   fetchBench: function(id) {
     $.ajax({
-      url: "/api/benches" + id,
+      url: "/api/benches/" + id,
       type: "GET",
       data: {id: id},
       success: function (bench) {
         ApiActions.receiveOneBench(bench);
+      }
+    });
+  },
+
+  createComment: function (comment, bench_id, callback) {
+    $.ajax({
+      url: "/comments",
+      type: "POST",
+      data: {comment: comment, id: bench_id},
+      success: function (comment) {
+        ApiActions.receiveOneComment(comment);
       }
     });
   },

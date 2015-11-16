@@ -1,5 +1,5 @@
 (function (root) {
-  root.ReviewForm = React.createClass({
+  root.CommentForm = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
 
     blankAttrs: {
@@ -16,14 +16,13 @@
       var comment = {};
       comment.rating = this.state.rating;
       comment.body = this.state.body;
-      comment.benchId = this.props.benchId;
-      ApiUtil.createComment(comment);
+      ApiUtil.createComment(comment, this.props.benchId);
       this.setState(this.blankAttrs);
     },
 
     render: function () {
       return (
-        <form className="comment-form" onSubmit={this.handleCommentSubmit}>
+        <form className="comment-form" onSubmit={this.createComment}>
           <div>
             <label htmlFor='comment-rating'>Rating:</label>
             <input
