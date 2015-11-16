@@ -2,15 +2,13 @@
   var BenchForm = React.createClass({
     mixins: [React.addons.LinkedStateMixin, ReactRouter.History],
 
-    blankAttrs: {
-      lat: '',
-      lng: '',
-      description: '',
-      seating: 1
-    },
-
     getInitialState: function () {
-      return this.blankAttrs;
+      return {
+        lat: this.props.location.query.lat,
+        lng: this.props.location.query.lng,
+        description: '',
+        seating: 1
+      };
     },
 
     createBench: function (e) {
@@ -30,18 +28,6 @@
 
       return (
         <form className='bench-form' onSubmit={this.createBench}>
-
-          <label htmlFor='bench-lat'>Bench Latitude:</label>
-          <br />
-          <input type='number' id='bench-lat' step='0.000001'
-            valueLink={this.linkState('lat')} />
-          <br />
-
-          <label htmlFor='bench-lng'>Bench Longitude:</label>
-          <br />
-          <input type='number' id='bench-lng'  step='0.000001'
-            valueLink={this.linkState('lng')} />
-          <br />
 
           <label htmlFor='bench-description'>Bench Description:</label>
           <br />

@@ -1,6 +1,8 @@
 (function(root){
   root.BenchesMap = React.createClass({
 
+    mixins: [ReactRouter.History],
+
     getInitialState: function () {
       return { map: 'undefined',
         markers: [],
@@ -50,6 +52,12 @@
       }.bind(this));
 
       return newMarkers;
+    },
+
+    handleMapDblClick: function (e) {
+      var lat = e.latLng.lat();
+      var lng = e.latLng.lng();
+      this.history.pushState(null, "/benches/new", {lat: lat, lng: lng});
     },
 
     render: function () {
@@ -127,6 +135,8 @@
 
       ApiUtil.fetchBenches(coords);
     });
+
+    newMap.addListener('dblclick', this.handleMapDblClick);
 
     this.setState({map: newMap, markers: BenchStore.all()});
   };
