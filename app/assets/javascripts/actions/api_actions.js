@@ -11,5 +11,12 @@ ApiActions = {
       actionType: BenchConstants.BENCH_RECEIVED,
       bench: bench
     });
+  },
+
+  showBench: function (id) {
+    AppDispatcher.dispatch({
+      actionType: BenchConstants.BENCH_SHOW,
+      id: id
+    });
   }
 };

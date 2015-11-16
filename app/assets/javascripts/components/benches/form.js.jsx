@@ -1,5 +1,5 @@
-// (function (root) {
-  var BenchForm = React.createClass({
+(function (root) {
+  root.BenchForm = React.createClass({
     mixins: [React.addons.LinkedStateMixin, ReactRouter.History],
 
     getInitialState: function () {
@@ -50,4 +50,4 @@
 
   });
 
-// })(this);
+})(this);

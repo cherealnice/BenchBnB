@@ -1,5 +1,5 @@
 (function (root) {
-   root.FilterParams = React.createClass({
+  root.FilterParams = React.createClass({
     mixins: [React.addons.LinkedStateMixin, ReactRouter.History],
 
     getInitialState: function () {

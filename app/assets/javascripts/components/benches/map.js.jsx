@@ -65,11 +65,31 @@
       this.history.pushState(null, "/benches/new", {lat: lat, lng: lng});
     },
 
+    handleIdle: function () {
+      var coords = this.parseBounds();
+
+      FilterActions.receiveNewParams({mapBounds: coords});
+    },
+
     render: function () {
       return(
         <div className="map" ref="map">
         </div>
       );
+    },
+
+    parseBounds: function () {
+      var bounds = this.state.map.getBounds();
+
+      var northEastLat = bounds.getNorthEast().lat();
+      var northEastLng = bounds.getNorthEast().lng();
+      var southWestLat = bounds.getSouthWest().lat();
+      var southWestLng = bounds.getSouthWest().lng();
+
+      return {
+        northEast: { lat: northEastLat, lng: northEastLng },
+        southWest: { lat: southWestLat, lng: southWestLng }
+      };
     }
   });
 
@@ -100,20 +120,6 @@
     }
   };
 
-  var parseBounds = function () {
-    var bounds = this.getBounds();
-
-    var northEastLat = bounds.getNorthEast().lat();
-    var northEastLng = bounds.getNorthEast().lng();
-    var southWestLat = bounds.getSouthWest().lat();
-    var southWestLng = bounds.getSouthWest().lng();
-
-    return {
-      northEast: { lat: northEastLat, lng: northEastLng },
-      southWest: { lat: southWestLat, lng: southWestLng }
-    };
-  };
-
   var makeMarker = function (bench) {
     var LatLng = { lat: bench.lat, lng: bench.lng };
     return (
@@ -127,19 +133,17 @@
 
   var createMap = function () {
     var map = React.findDOMNode(this.refs.map);
+    var center = this.props.center;
 
     var mapOptions = {
-      center: {lat: 40.7459036, lng: -73.9908681},
-      zoom: 12
+      center: center,
+      draggable: this.props.draggable,
+      zoom: this.props.zoom
     };
 
     var newMap = new google.maps.Map(map, mapOptions);
 
-    newMap.addListener('idle', function () {
-      var coords = parseBounds.call(this);
-
-      FilterActions.receiveNewParams({mapBounds: coords});
-    });
+    newMap.addListener('idle', this.handleIdle);
 
     newMap.addListener('dblclick', this.handleMapDblClick);
 

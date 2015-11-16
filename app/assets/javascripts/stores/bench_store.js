@@ -12,7 +12,7 @@
   root.BenchStore = $.extend({}, EventEmitter.prototype, {
 
     BENCHES_INDEX_CHANGE_EVENT: "benches_index_change",
-    BENCH_DETAIL_CHANGE_EVENT: "bench_detail_change",
+    BENCH_DETAIL_CHANGE_EVENT:  "bench_detail_change",
 
     all: function(){
       return _benches.slice(0);
@@ -26,10 +26,10 @@
       this.removeListener(event, callback);
     },
 
-    find: function (description) {
+    find: function (value, param) {
       var match;
       for (var i = 0; i < _benches.length; i++) {
-        if (_benches[i].description === description) {
+        if (_benches[i][param] === value) {
           match = _benches[i];
           break;
         }
