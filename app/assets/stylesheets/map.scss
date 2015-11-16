@@ -6,7 +6,7 @@
 }
 
 .map-section {
-  height: 620px;
+  height: calc(100vh - 60px);
   float: right;
-  width: 510px;
+  width: calc(100vw - 65%);
 }
