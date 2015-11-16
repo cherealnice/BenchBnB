@@ -138,7 +138,7 @@
     newMap.addListener('idle', function () {
       var coords = parseBounds.call(this);
 
-      ApiUtil.fetchBenches(coords);
+      FilterActions.receiveNewParams({mapBounds: coords});
     });
 
     newMap.addListener('dblclick', this.handleMapDblClick);

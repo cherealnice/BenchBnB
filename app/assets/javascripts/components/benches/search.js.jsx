@@ -1,7 +1,22 @@
 var BenchesSearch = React.createClass({
 
   getInitialState: function () {
-    return ({ detailMarker: null });
+    return ({ detailMarker: null, params: FilterParamsStore.params() });
+  },
+
+  componentDidMount: function () {
+    FilterParamsStore.addChangeListener(this.onParamsChange,
+      FilterParamsStore.PARAMS_CHANGE_EVENT);
+  },
+
+  componentWillUnmount: function () {
+    FilterParamsStore.removeChangeListener(this.onParamsChange,
+      FilterParamsStore.PARAMS_CHANGE_EVENT);
+  },
+
+  onParamsChange: function () {
+    this.setState({ params: FilterParamsStore.params() });
+    ApiUtil.fetchBenches(this.state.params);
   },
 
   render: function () {
