@@ -1,13 +1,25 @@
 (function(root){
   var _benches = [];
 
-  var resetBenches = function(benches){
+  var resetBenches = function (benches) {
     _benches = benches;
+  };
+
+  var resetBench = function (bench) {
+    var switched = false;
+    _benches.forEach(function (b) {
+      if(b.id === bench.id) {
+        _benches[_benches.indesOf(b)] = bench;
+        switched = true;
+      }
+    });
+    if (!switched) { _benches.push(bench); }
   };
 
   root.BenchStore = $.extend({}, EventEmitter.prototype, {
 
     BENCHES_INDEX_CHANGE_EVENT: "benches_index_change",
+    BENCH_DETAIL_CHANGE_EVENT: "bench_detail_change",
 
     all: function(){
       return _benches.slice(0);
@@ -38,7 +50,10 @@
           resetBenches(payload.benches);
           BenchStore.emit(BenchStore.BENCHES_INDEX_CHANGE_EVENT);
           break;
-        default:
+        case BenchConstants.BENCH_RECEIVED:
+          resetBench(payload.bench);
+          BenchStore.emit(BenchStore.BENCH_DETAIL_CHANGE_EVENT);
+          break;
       }
     })
   });

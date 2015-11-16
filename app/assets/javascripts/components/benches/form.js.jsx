@@ -4,7 +4,7 @@
 
     blankAttrs: {
       lat: '',
-      long: '',
+      lng: '',
       description: '',
       seating: 1
     },
@@ -16,24 +16,15 @@
     createBench: function (e) {
       e.preventDefault();
       var bench = {};
-      bench.lng = this.state.long;
+      bench.lng = this.state.lng;
       bench.lat = this.state.lat;
       bench.description = this.state.description;
       bench.seating = this.state.seating;
+      ApiUtil.createBench(bench, function (id) {
+        this.history.pushState(null, "/bench/", + id, {});
+      }.bind(this));
+      this.setState(this.blankAttrs);
     },
-
-      createPokemon: function (event) {
-    event.preventDefault();
-    var pokemon = {};
-    Object.keys(this.state).forEach(function (key) {
-      if(key != "move_1" && key != "move_2") { pokemon[key] = this.state[key]; }
-    }.bind(this))
-    pokemon.moves = [this.state.move_1, this.state.move_2];
-    ApiUtil.createPokemon(pokemon, function (id) {
-      this.history.pushState(null, "/pokemon/" + id, {});
-    }.bind(this));
-    this.setState(this.blankAttrs);
-  },
 
     render: function () {
 
@@ -42,14 +33,14 @@
 
           <label htmlFor='bench-lat'>Bench Latitude:</label>
           <br />
-          <input type='number' id='bench-lat' step='0.001'
+          <input type='number' id='bench-lat' step='0.000001'
             valueLink={this.linkState('lat')} />
           <br />
 
-          <label htmlFor='bench-long'>Bench Longitude:</label>
+          <label htmlFor='bench-lng'>Bench Longitude:</label>
           <br />
-          <input type='number' id='bench-long'  step='0.001'
-            valueLink={this.linkState('long')} />
+          <input type='number' id='bench-lng'  step='0.000001'
+            valueLink={this.linkState('lng')} />
           <br />
 
           <label htmlFor='bench-description'>Bench Description:</label>

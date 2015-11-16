@@ -1,4 +1,4 @@
 json.extract!(
   bench,
-  :description, :lat, :long
+  :description, :lat, :lng
 )

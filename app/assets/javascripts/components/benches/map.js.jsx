@@ -102,7 +102,7 @@
   };
 
   var makeMarker = function (bench) {
-    var LatLng = { lat: bench.lat, lng: bench.long };
+    var LatLng = { lat: bench.lat, lng: bench.lng };
     return (
       new google.maps.Marker({
         position: LatLng,
