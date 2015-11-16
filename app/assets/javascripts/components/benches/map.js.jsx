@@ -18,8 +18,14 @@
       createMap.call(this);
     },
 
-    onMarkerDetailChange: function () {
+    componentWillUnmount: function () {
+      BenchStore.removeChangeListener(this.onBenchIndexChange,
+        BenchStore.BENCHES_INDEX_CHANGE_EVENT);
+      MarkerStore.removeChangeListener(this.onMarkerDetailChange,
+        MarkerStore.INDEX_HOVER_CHANGE_EVENT);
+    },
 
+    onMarkerDetailChange: function () {
       removeOldMarker.call(this);
       var newMarker = addNewMarker.call(this);
 
@@ -27,7 +33,6 @@
     },
 
     onBenchIndexChange: function () {
-
       var benches = BenchStore.all() || [];
       var markers = this.state.markers.slice() || [];
 

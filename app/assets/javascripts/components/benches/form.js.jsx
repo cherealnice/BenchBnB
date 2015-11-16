@@ -19,9 +19,8 @@
       bench.description = this.state.description;
       bench.seating = this.state.seating;
       ApiUtil.createBench(bench, function (id) {
-        this.history.pushState(null, "/bench/", + id, {});
+        this.history.pushState(null, "/", {});
       }.bind(this));
-      this.setState(this.blankAttrs);
     },
 
     render: function () {

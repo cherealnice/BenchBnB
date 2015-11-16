@@ -9,6 +9,11 @@ var BenchesIndex = React.createClass({
       BenchStore.BENCHES_INDEX_CHANGE_EVENT);
   },
 
+  componentWillUnmount: function () {
+    BenchStore.removeChangeListener(this.onBenchesIndexChange,
+    BenchStore.BENCHES_INDEX_CHANGE_EVENT);
+  },
+
   onBenchesIndexChange: function () {
     this.setState({ benches: BenchStore.all() });
   },

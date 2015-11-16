@@ -2,18 +2,11 @@
   var _benches = [];
 
   var resetBenches = function (benches) {
-    _benches = benches;
+    _benches = benches || [];
   };
 
-  var resetBench = function (bench) {
-    var switched = false;
-    _benches.forEach(function (b) {
-      if(b.id === bench.id) {
-        _benches[_benches.indesOf(b)] = bench;
-        switched = true;
-      }
-    });
-    if (!switched) { _benches.push(bench); }
+  var addBench = function (bench) {
+    _benches.push(bench);
   };
 
   root.BenchStore = $.extend({}, EventEmitter.prototype, {
@@ -51,8 +44,8 @@
           BenchStore.emit(BenchStore.BENCHES_INDEX_CHANGE_EVENT);
           break;
         case BenchConstants.BENCH_RECEIVED:
-          resetBench(payload.bench);
-          BenchStore.emit(BenchStore.BENCH_DETAIL_CHANGE_EVENT);
+          addBench(payload.bench);
+          BenchStore.emit(BenchStore.BENCHES_INDEX_CHANGE_EVENT);
           break;
       }
     })
